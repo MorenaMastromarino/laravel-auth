@@ -8,8 +8,7 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Titolo</th>
-        <th scope="col">Contenuto</th>
-        <th scope="col">Slug</th>
+        <th scope="col" colspan="3">Azioni</th>
       </tr>
     </thead>
     <tbody>
@@ -17,13 +16,16 @@
         <tr>
           <th scope="row">{{$post->id}}</th>
           <td>{{$post->title}}</td>
-          <td>{{$post->content}}</td>
-          <td>{{$post->slug}}</td>
+          <td><a class="btn btn-success" href="{{route('admin.posts.show', $post)}}">SHOW</a></td>
+          <td><a class="btn btn-info" href="#">EDIT</a></td>
+          <td><a class="btn btn-danger" href="#">DELETE</a></td>
         </tr>
         
       @endforeach
       
     </tbody>
   </table>
+
+  {{$posts->links()}}
 </div>
 @endsection
