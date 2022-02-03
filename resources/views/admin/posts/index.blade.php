@@ -17,7 +17,7 @@
           <th scope="row">{{$post->id}}</th>
           <td>{{$post->title}}</td>
           <td><a class="btn btn-success" href="{{route('admin.posts.show', $post)}}">SHOW</a></td>
-          <td><a class="btn btn-info" href="#">EDIT</a></td>
+          <td><a class="btn btn-info" href="{{route('admin.posts.edit', $post)}}">EDIT</a></td>
           <td><a class="btn btn-danger" href="#">DELETE</a></td>
         </tr>
         

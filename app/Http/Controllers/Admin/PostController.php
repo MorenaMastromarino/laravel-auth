@@ -37,19 +37,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'title' => 'required|min:2|max:255',
-                'content' => 'required'
-            ],
-            [
-                'title.required' => 'Il titolo è un campo obbligatorio',
-                'title.min' => 'Il titolo deve contenere almeno :min carateri',
-                'title.max' => 'Il titolo deve contenere massimo :max carateri',
-
-                'content.required' => 'Il contenuto è un campo obbligatorio'
-            ]
-        );
+        $request->validate($this->validationData(), $this->validationErrors());
         $data = $request->all();
 
         $new_post = new Post();
@@ -85,7 +73,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        if($post){
+            return view('admin.posts.edit', compact('post'));
+        }
+        abort(404);
     }
 
     /**
@@ -95,9 +88,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate($this->validationData(), $this->validationErrors());
+
+        $data = $request->all();
+
+        if($data['title'] != $post->title){
+            $data['slug'] = Post::generateUniqueSlug($data['title']);
+        }
+
+        $post->update($data);
+        
+        return redirect()->route('admin.posts.show', $post);
     }
 
     /**
@@ -109,5 +112,22 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function validationData(){
+        return [
+            'title' => 'required|min:2|max:255',
+            'content' => 'required'
+        ];
+    }
+
+    private function validationErrors(){
+        return [
+            'title.required' => 'Il titolo è un campo obbligatorio',
+            'title.min' => 'Il titolo deve contenere almeno :min carateri',
+            'title.max' => 'Il titolo deve contenere massimo :max carateri',
+
+            'content.required' => 'Il contenuto è un campo obbligatorio'
+        ];
     }
 }
