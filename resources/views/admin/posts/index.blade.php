@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -40,4 +40,8 @@
 
   {{$posts->links()}}
 </div>
+@endsection
+
+@section('title')
+  | Elenco post
 @endsection

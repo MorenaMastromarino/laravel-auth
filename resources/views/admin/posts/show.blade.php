@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -16,4 +16,9 @@
 
   </div>
 </div>
+@endsection
+
+
+@section('title')
+  | {{$post->title}}
 @endsection
