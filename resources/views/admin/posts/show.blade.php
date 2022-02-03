@@ -5,7 +5,15 @@
   <h1>{{$post->title}}</h1>
   <p>{{$post->content}}</p>
 
-  <a class="btn btn-info" href="{{route('admin.posts.edit', $post)}}">EDIT</a>
-  <a class="btn btn-danger" href="#">DELETE</a>
+  <div class="row">
+    <a class="btn btn-info mr-3" href="{{route('admin.posts.edit', $post)}}">EDIT</a>
+    <form onsubmit="return confirm('Vuoi eliminare il post {{$post->title}}?')"
+       action="{{route('admin.posts.destroy', $post)}}" method="POST">
+      @csrf
+      @method('DELETE')
+        <button type="submit" class="btn btn-danger">DELETE</button>
+    </form>
+
+  </div>
 </div>
 @endsection
